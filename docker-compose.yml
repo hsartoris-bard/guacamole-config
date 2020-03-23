@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  guacd:
+    image: guacamole/guacd
+    hostname: guacd
+    container_name: guacd
+  guacamole:
+    image: guacamole/guacamole
+    hostname: guacamole
+    container_name: guacamole
+    ports:
+      - 127.0.0.1:8080:8080
+    environment:
+      GUACD_HOSTNAME: guacd
+      GUACAMOLE_HOME: /etc/guacamole/
+    links:
+      - guacd
+    volumes:
+      - ./guacamole-auth-cas-1.1.0.jar:/etc/guacamole/extensions/guacamole-auth-cas-1.1.0.jar
+      - ./etc/guacamole/guacamole.properties:/etc/guacamole/guacamole.properties
+
